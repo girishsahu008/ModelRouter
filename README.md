@@ -4,6 +4,8 @@
 
 Built with [Beads](https://github.com/badlogic/beads) for AI-native issue tracking and [Graphify](https://github.com/badlogic/graphify) for codebase knowledge — both stay active across every `claude-mix` session automatically.
 
+> **Tip:** For better session management across AI model switches, install [Beads](https://github.com/badlogic/beads) and [Graphify](https://github.com/safishamsi/graphify) — see [Development Tooling](#development-tooling).
+
 > Run `claude-mix` instead of `claude`. Everything else stays the same.
 
 ---

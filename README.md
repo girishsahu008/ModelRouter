@@ -1,6 +1,6 @@
 # ModelRouter
 
-**Save 80–90% of your Claude Pro credits** by automatically routing coding tasks to free AI models — transparently, with zero changes to your workflow.
+**Save your Claude Pro credits** by automatically routing coding tasks to free AI models — transparently, with zero changes to your workflow.
 
 > Run `claude-mix` instead of `claude`. Everything else stays the same.
 
@@ -19,7 +19,7 @@ You type a message in Claude Code
 │  Classifier      │  ← matches routing rules (YAML, first-match-wins)
 └──────┬───────────┘
        │
-       ├─ Trivial / Read / Basic Q   →  Gemma 3 27B  (Google free API, ~1s)
+       ├─ Trivial / Read / Basic Q   →  Gemma 3 27B  (Google free API/ Locall Ollama, ~1s)
        ├─ Tests / Debugging          →  Codex CLI     (OpenAI free tier)
        ├─ Feature implementation     →  Gemini 2.5 Pro (Google free API)
        ├─ [Fallback chain]           →  tries next backend if one fails
@@ -54,7 +54,7 @@ Each routing decision is tagged in the response:
 - [Claude Code](https://claude.ai/code) installed
 - A free [Google AI Studio](https://aistudio.google.com) API key
 - (Optional) [Ollama](https://ollama.com/) for offline fallback
-- (Optional) [Codex CLI](https://github.com/openai/codex) (`npm install -g @openai/codex`)
+- [Codex CLI](https://github.com/openai/codex) (`npm install -g @openai/codex`)
 
 ### Install
 
@@ -66,11 +66,9 @@ npm install
 
 ### Configure your Gemini API key
 
-Open `src/connectors/gemini.js` and replace the key, or set an environment variable:
 
-```bash
-export GOOGLE_API_KEY=your_key_here
-```
+export GOOGLE_API_KEY=your_key_here in .env file.
+
 
 Get a free key at [aistudio.google.com](https://aistudio.google.com) — no billing required.
 
@@ -180,7 +178,7 @@ npx kill-port 8082 8083
 ```
 
 ---
-
+Note: start.js need to be started for calude-mix to route requests.
 ## Environment Variables
 
 | Variable | Default | Description |
@@ -275,10 +273,43 @@ A: Yes. The Codex connector uses `cmd /c` only on Windows; macOS/Linux uses the 
 
 ---
 
+## Development Tooling
+
+This project is built and maintained using two AI-native dev tools that work inside `claude-mix` sessions:
+
+### [Beads](https://github.com/badlogic/beads) — Issue Tracker
+
+All tasks and bugs are tracked with `bd` (beads), a graph-based issue tracker that persists across sessions.
+
+```bash
+bd ready                        # see available work
+bd create --title="..." --type=feature --priority=2
+bd update <id> --claim          # start working
+bd close <id>                   # mark done
+bd remember "insight to keep"   # persist knowledge across sessions
+```
+
+Beads is automatically primed on every `claude-mix` session via the `UserPromptSubmit` hook in `~/.claude/settings.json`.
+
+### [Graphify](https://github.com/badlogic/graphify) — Code Knowledge Graph
+
+Graphify builds a semantic graph of the codebase and exposes it as a knowledge base Claude reads before answering architecture questions.
+
+```bash
+# Rebuild the graph after code changes
+python3 -c "from graphify.watch import _rebuild_code; from pathlib import Path; _rebuild_code(Path('.'))"
+```
+
+The graph output lives in `graphify-out/`. Claude reads `graphify-out/GRAPH_REPORT.md` automatically before architecture decisions.
+
+Both tools are injected via `--append-system-prompt` in `claude-mix` so they are always active regardless of context compaction.
+
+---
+
 ## Contributing
 
 1. Fork the repo
-2. Create an issue to discuss your change
+2. Create a beads issue (`bd create`) or GitHub issue to discuss your change
 3. Submit a PR with a clear description
 
 All routing logic is in `src/classifier.js` and `config/routing-rules.yaml` — easy to extend.
@@ -296,4 +327,6 @@ MIT — see [LICENSE](LICENSE)
 - [Ollama](https://ollama.com/) — local model serving
 - [Google Gemini API](https://ai.google.dev/) — free hosted inference
 - [OpenAI Codex CLI](https://github.com/openai/codex) — free coding assistant
+- [Beads](https://github.com/badlogic/beads) — AI-native issue tracker
+- [Graphify](https://github.com/badlogic/graphify) — codebase knowledge graph
 - [Claude Code](https://claude.ai/code) — the best coding assistant, used where it matters

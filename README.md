@@ -277,11 +277,25 @@ A: Yes. The Codex connector uses `cmd /c` only on Windows; macOS/Linux uses the 
 
 ## Development Tooling
 
+> **These tools are optional.** The router works with just `npm install`. Beads and Graphify are for contributors who want the same AI-native development workflow used to build this project.
+
 This project is built and maintained using two AI-native dev tools that work inside `claude-mix` sessions:
 
 ### [Beads](https://github.com/badlogic/beads) — Issue Tracker
 
-All tasks and bugs are tracked with `bd` (beads), a graph-based issue tracker that persists across sessions.
+Beads is a native binary (not an npm package) — install it separately:
+
+```bash
+# Install Beads CLI
+# Download the latest release for your OS from:
+# https://github.com/badlogic/beads/releases
+
+# Then initialise in the project root
+cd ModelRouter
+bd init
+```
+
+All tasks and bugs are tracked with `bd`:
 
 ```bash
 bd ready                        # see available work
@@ -293,18 +307,24 @@ bd remember "insight to keep"   # persist knowledge across sessions
 
 Beads is automatically primed on every `claude-mix` session via the `UserPromptSubmit` hook in `~/.claude/settings.json`.
 
-### [Graphify](https://github.com/badlogic/graphify) — Code Knowledge Graph
+### [Graphify](https://github.com/safishamsi/graphify) — Code Knowledge Graph
 
-Graphify builds a semantic graph of the codebase and exposes it as a knowledge base Claude reads before answering architecture questions.
+Graphify is a Python package — install it separately:
 
 ```bash
-# Rebuild the graph after code changes
+pip install git+https://github.com/safishamsi/graphify
+```
+
+Then build the knowledge graph:
+
+```bash
+cd ModelRouter
 python3 -c "from graphify.watch import _rebuild_code; from pathlib import Path; _rebuild_code(Path('.'))"
 ```
 
 The graph output lives in `graphify-out/`. Claude reads `graphify-out/GRAPH_REPORT.md` automatically before architecture decisions.
 
-Both tools are injected via `--append-system-prompt` in `claude-mix` so they are always active regardless of context compaction.
+Both tools are injected via `--append-system-prompt` in `claude-mix` so they stay active regardless of context compaction.
 
 ---
 

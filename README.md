@@ -332,11 +332,25 @@ Both tools are injected via `--append-system-prompt` in `claude-mix` so they sta
 
 ## Contributing
 
-1. Fork the repo
-2. Create a beads issue (`bd create`) or GitHub issue to discuss your change
-3. Submit a PR with a clear description
+Contributions are welcome! Here's how to get started:
 
-All routing logic is in `src/classifier.js` and `config/routing-rules.yaml` — easy to extend.
+1. **Fork** the repo and clone it locally
+2. **Discuss first** — open a GitHub issue or a beads issue (`bd create`) before starting work on large changes
+3. **Make your change** — routing rules in `config/routing-rules.yaml`, connectors in `src/connectors/`, classifier logic in `src/classifier.js`
+4. **Test it** — run `node start.js` and send a test request via `curl` (see [Commands](#commands))
+5. **Submit a PR** with a clear description of what changed and why
+
+Good first contributions:
+- Add a new routing rule to `config/routing-rules.yaml`
+- Add a new backend connector in `src/connectors/`
+- Improve response time or token usage in an existing connector
+- macOS/Linux fixes (most dev was done on Windows)
+
+---
+
+## Author
+
+**Girish Sahu** — [girish.sahu@gmail.com](mailto:girish.sahu@gmail.com)
 
 ---
 
@@ -348,6 +362,9 @@ MIT — see [LICENSE](LICENSE)
 
 ## Credits
 
+Created by [Girish Sahu](mailto:girish.sahu@gmail.com).
+
+Built with:
 - [Ollama](https://ollama.com/) — local model serving
 - [Google Gemini API](https://ai.google.dev/) — free hosted inference
 - [OpenAI Codex CLI](https://github.com/openai/codex) — free coding assistant

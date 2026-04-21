@@ -1,7 +1,7 @@
 {
   "name": "claude-router",
   "version": "0.1.0",
-  "description": "Intelligent routing proxy for Claude Code — routes tasks to the cheapest capable AI model",
+  "description": "Intelligent routing proxy for Claude Code — routes tasks to the cheapest capable AI model. Built with Beads (issue tracking) and Graphify (code knowledge graph).",
   "main": "src/router-service.js",
   "bin": {
     "claude-router": "./bin/claude-router.js",

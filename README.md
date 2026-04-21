@@ -2,6 +2,8 @@
 
 **Save your Claude Pro credits** by automatically routing coding tasks to free AI models — transparently, with zero changes to your workflow.
 
+Built with [Beads](https://github.com/badlogic/beads) for AI-native issue tracking and [Graphify](https://github.com/badlogic/graphify) for codebase knowledge — both stay active across every `claude-mix` session automatically.
+
 > Run `claude-mix` instead of `claude`. Everything else stays the same.
 
 ---

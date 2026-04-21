@@ -1,0 +1,25 @@
+{
+  "name": "claude-router",
+  "version": "0.1.0",
+  "description": "Intelligent routing proxy for Claude Code — routes tasks to the cheapest capable AI model",
+  "main": "src/router-service.js",
+  "bin": {
+    "claude-router": "./bin/claude-router.js",
+    "claude-routed": "./bin/claude-routed.js"
+  },
+  "scripts": {
+    "start": "node src/router-service.js",
+    "test": "node --test src/**/*.test.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "chalk": "^5.3.0",
+    "commander": "^12.0.0",
+    "js-yaml": "^4.1.0",
+    "node-cache": "^5.1.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT"
+}

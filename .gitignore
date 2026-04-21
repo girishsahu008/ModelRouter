@@ -1,5 +1,27 @@
+# Dependencies
+node_modules/
 
-# Beads / Dolt files (added by bd init)
+# Environment / secrets
+.env
+*.env.local
+config.yaml
+
+# Beads / Dolt
 .dolt/
 *.db
 .beads-credential-key
+
+# Claude Code local settings
+.claude/settings.local.json
+.claude/skills/
+
+# Agents
+.agents/
+
+# Skills
+skills/
+skills-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
